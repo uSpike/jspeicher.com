@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+        {% block head %}
+        <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+        <meta charset="utf-8" />
+        {% endblock head %}
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/pygment.css" />
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/css/style.css" />
+</head>
+
+<body>
+    <header>
+        {% block header %}
+        <h1>{{ SITENAME }}{% if titlecat %} - {{ titlecat }}{% endif %}</h1>
+        {% endblock header %}
+        <nav id="nav-top">
+            <img src='{{ SITEURL }}/theme/images/face.png'>
+            <ol>
+                <li{% if page_name == 'index' %} class="active"{% endif %}>
+                    <a href="{{ SITEURL }}/index.html">Home</a>
+                </li>
+                <li{% if blog_page %} class="active"{% endif %}>
+                    <a href="{{ SITEURL }}/archives.html">Blog</a>
+                </li>
+                {% for p in pages|sort(attribute='title', reverse=True) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </nav>
+        {% block content %}
+        {% endblock %}
+        <footer>
+            <hr />
+            <nav style="float:left">
+                <ul>
+                {% for name, link in SOCIAL %}
+                    <li><a href="{{ link }}" target="_blank">{{ name }}</a></li>
+                {% endfor %}
+                </ul>
+            </nav>
+
+            <span style="float:right">Powered by <a href="http://getpelican.com/">Pelican</a> and <a href="http://python.org">Python</a>.</span>
+        </footer>
+</body>
+</html>
